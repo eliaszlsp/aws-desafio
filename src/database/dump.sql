@@ -8,5 +8,5 @@ CREATE TABLE postagem (
 );
 
 CREATE TABLE usuario (
-    id SERIAL PRIMARY KEY, nome TEXT NOT NULL, email TEXT NOT NULL UNIQUE, foto TEXT, postagem_id TEXT
+    id SERIAL PRIMARY KEY, nome TEXT NOT NULL, email TEXT NOT NULL UNIQUE, foto TEXT, postagem_id TEXT NOT NULL,
 );
