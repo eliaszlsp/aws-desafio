@@ -1,0 +1,507 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "API de Postagens",
+    "version": "1.0.0",
+    "description": "API para gerenciar postagens, temas e usuários"
+  },
+  "paths": {
+    "/postagens": {
+      "get": {
+        "tags": ["Postagens"],
+        "summary": "Listar todas as postagens",
+        "responses": {
+          "200": {
+            "description": "Sucesso",
+            "content": {
+              "application/json": {
+                "example": [
+                  {
+                    "id": 1,
+                    "titulo": "Exemplo de Postagem",
+                    "texto": "Conteúdo da postagem...",
+                    "data": "2024-02-26T12:00:00Z",
+                    "tema_id": 1,
+                    "usuario_id": 1
+                  }
+                ]
+              }
+            }
+          },
+          "404": {
+            "description": "Nenhuma postagem encontrada"
+          },
+          "500": {
+            "description": "Erro interno do servidor"
+          }
+        }
+      },
+      "post": {
+        "tags": ["Postagens"],
+        "summary": "Adicionar uma nova postagem",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "example": {
+                "titulo": "Nova Postagem",
+                "texto": "Conteúdo da nova postagem...",
+                "tema_id": 1,
+                "usuario_id": 1
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Postagem criada com sucesso"
+          },
+          "400": {
+            "description": "Requisição inválida"
+          },
+          "500": {
+            "description": "Erro interno do servidor"
+          }
+        }
+      }
+    },
+    "/postagens/{id}": {
+      "get": {
+        "tags": ["Postagens"],
+        "summary": "Visualizar detalhes de uma postagem por ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sucesso",
+            "content": {
+              "application/json": {
+                "example": {
+                  "id": 1,
+                  "titulo": "Exemplo de Postagem",
+                  "texto": "Conteúdo da postagem...",
+                  "data": "2024-02-26T12:00:00Z",
+                  "tema_id": {
+                    "id": 1,
+                    "nome": "Tema da Postagem"
+                  },
+                  "usuario_id": {
+                    "id": 1,
+                    "nome": "Nome do Usuário"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Postagem não encontrada"
+          },
+          "500": {
+            "description": "Erro interno do servidor"
+          }
+        }
+      },
+      "put": {
+        "tags": ["Postagens"],
+        "summary": "Atualizar uma postagem por ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "example": {
+                "titulo": "Novo Título",
+                "texto": "Novo conteúdo da postagem...",
+                "tema_id": 1,
+                "usuario_id": 1
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Postagem atualizada com sucesso"
+          },
+          "400": {
+            "description": "Requisição inválida"
+          },
+          "404": {
+            "description": "Postagem não encontrada"
+          },
+          "500": {
+            "description": "Erro interno do servidor"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Postagens"],
+        "summary": "Deletar uma postagem por ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Postagem deletada com sucesso"
+          },
+          "404": {
+            "description": "Postagem não encontrada"
+          },
+          "500": {
+            "description": "Erro interno do servidor"
+          }
+        }
+      }
+    },
+    "/usuarios": {
+      "get": {
+        "tags": ["Usuarios"],
+        "summary": "Listar todos os usuários",
+        "responses": {
+          "200": {
+            "description": "Sucesso",
+            "content": {
+              "application/json": {
+                "example": [
+                  {
+                    "id": 1,
+                    "nome": "Nome do Usuário",
+                    "email": "usuario@email.com",
+                    "foto": "URL da foto",
+                    "postagem_id": 1
+                  }
+                ]
+              }
+            }
+          },
+          "404": {
+            "description": "Nenhum usuário encontrado"
+          },
+          "500": {
+            "description": "Erro interno do servidor"
+          }
+        }
+      },
+      "post": {
+        "tags": ["Usuarios"],
+        "summary": "Adicionar um novo usuário",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "example": {
+                "nome": "Novo Usuário",
+                "email": "novousuario@email.com",
+                "foto": "URL da foto",
+                "postagem_id": 1
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Usuário criado com sucesso"
+          },
+          "400": {
+            "description": "Requisição inválida"
+          },
+          "500": {
+            "description": "Erro interno do servidor"
+          }
+        }
+      }
+    },
+    "/usuarios/{id}": {
+      "get": {
+        "tags": ["Usuarios"],
+        "summary": "Visualizar detalhes de um usuário por ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sucesso",
+            "content": {
+              "application/json": {
+                "example": {
+                  "id": 1,
+                  "nome": "Nome do Usuário",
+                  "email": "usuario@email.com",
+                  "foto": "URL da foto",
+                  "postagem_id": {
+                    "id": 1,
+                    "titulo": "Título da Postagem"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Usuário não encontrado"
+          },
+          "500": {
+            "description": "Erro interno do servidor"
+          }
+        }
+      },
+      "put": {
+        "tags": ["Usuarios"],
+        "summary": "Atualizar um usuário por ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "example": {
+                "nome": "Novo Nome",
+                "email": "novonome@email.com",
+                "foto": "URL da nova foto",
+                "postagem_id": 2
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Usuário atualizado com sucesso"
+          },
+          "400": {
+            "description": "Requisição inválida"
+          },
+          "404": {
+            "description": "Usuário não encontrado"
+          },
+          "500": {
+            "description": "Erro interno do servidor"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Usuarios"],
+        "summary": "Deletar um usuário por ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Usuário deletado com sucesso"
+          },
+          "404": {
+            "description": "Usuário não encontrado"
+          },
+          "500": {
+            "description": "Erro interno do servidor"
+          }
+        }
+      }
+    },
+    "/temas": {
+      "get": {
+        "tags": ["Temas"],
+        "summary": "Listar todos os temas",
+        "responses": {
+          "200": {
+            "description": "Sucesso",
+            "content": {
+              "application/json": {
+                "example": [
+                  {
+                    "id": 1,
+                    "descricao": "Tema 1",
+                    "postagem_id": 1
+                  },
+                  {
+                    "id": 2,
+                    "descricao": "Tema 2",
+                    "postagem_id": 2
+                  }
+                ]
+              }
+            }
+          },
+          "404": {
+            "description": "Nenhum tema encontrado"
+          },
+          "500": {
+            "description": "Erro interno do servidor"
+          }
+        }
+      },
+      "post": {
+        "tags": ["Temas"],
+        "summary": "Adicionar um novo tema",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "example": {
+                "descricao": "Novo Tema",
+                "postagem_id": 1
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Tema criado com sucesso"
+          },
+          "400": {
+            "description": "Requisição inválida"
+          },
+          "500": {
+            "description": "Erro interno do servidor"
+          }
+        }
+      }
+    },
+    "/temas/{id}": {
+      "get": {
+        "tags": ["Temas"],
+        "summary": "Visualizar detalhes de um tema por ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sucesso",
+            "content": {
+              "application/json": {
+                "example": {
+                  "id": 1,
+                  "descricao": "Tema 1",
+                  "postagem_id": {
+                    "id": 1,
+                    "titulo": "Título da Postagem"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Tema não encontrado"
+          },
+          "500": {
+            "description": "Erro interno do servidor"
+          }
+        }
+      },
+      "put": {
+        "tags": ["Temas"],
+        "summary": "Atualizar um tema por ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "example": {
+                "descricao": "Nova Descrição",
+                "postagem_id": 2
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Tema atualizado com sucesso"
+          },
+          "400": {
+            "description": "Requisição inválida"
+          },
+          "404": {
+            "description": "Tema não encontrado"
+          },
+          "500": {
+            "description": "Erro interno do servidor"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Temas"],
+        "summary": "Deletar um tema por ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Tema deletado com sucesso"
+          },
+          "404": {
+            "description": "Tema não encontrado"
+          },
+          "500": {
+            "description": "Erro interno do servidor"
+          }
+        }
+      }
+    }
+  }
+}

@@ -23,27 +23,22 @@ const {
 } = require("./controladores/postagem.js");
 
 const rotas = express();
-rotas.get("/usuario", visualizarUsuario);
-rotas.get("/postagem", visualizarPostagem);
-rotas.get("/tema", visualizarTema);
+rotas.get("/usuarios/:id", visualizarUsuarioID);
+rotas.get("/usuarios", visualizarUsuario);
+rotas.post("/usuarios", adicionarUsuario);
+rotas.put("/usuarios/:id", atualizarUsuario);
+rotas.delete("/usuarios/:id", apagarUsuario);
 
-rotas.get("/usuario/:id", visualizarUsuarioID);
-rotas.get("/postagem/:id", visualizarPostagemId);
-rotas.get("/tema/:id", visualisarTemaPorId);
+rotas.get("/postagens/:id", visualizarPostagemId);
+rotas.get("/postagens", visualizarPostagem);
+rotas.post("/postagens", adicionarPostagem);
+rotas.put("/postagens/:id", atualizarPostagem);
+rotas.delete("/postagens/:id", apagarPostagem);
 
-rotas.post("/usuario", adicionarUsuario);
-rotas.post("/tema", adicionarTema);
-rotas.post("/postagem", adicionarPostagem);
-
-rotas.put("/usuario/:id", atualizarUsuario);
-rotas.put("/postagem/:id", atualizarPostagem);
-
-rotas.put("/tema/:id", atualizarTema);
-
-rotas.delete("/usuario/:id", apagarUsuario);
-
-rotas.delete("/postagem/:id", apagarPostagem);
-
-rotas.delete("/tema/:id", apagarTema);
+rotas.get("/temas", visualizarTema);
+rotas.get("/temas/:id", visualisarTemaPorId);
+rotas.post("/temas", adicionarTema);
+rotas.put("/temas/:id", atualizarTema);
+rotas.delete("/temas/:id", apagarTema);
 
 module.exports = rotas;
