@@ -1,12 +1,11 @@
 const knex = require("../database/conexao");
 
 const visualizarTema = async (req, res) => {
-  const { id } = req.params;
   try {
-    const listarTema = await knex.select().from("tema").where({ id });
+    const listarTema = await knex.select().from("tema");
 
     if (listarTema.length <= 0) {
-      return res.status(404).send({ message: "Tema não encontrado." });
+      return res.status(404).send({ message: "nenhum Tema cadastrado." });
     }
 
     return res.status(200).json(listarTema);
@@ -18,12 +17,17 @@ const visualizarTema = async (req, res) => {
 const visualisarTemaPorId = async (req, res) => {
   const { id } = req.params;
   try {
-    const listarTema = await knex.select().from("tema").where({ id });
+    const listarTema = await knex.select().from("tema").where({ id }).first();
+    const listarPostagem = await knex
+      .select()
+      .from("postagem")
+      .where({ tema_id: id });
 
-    if (listarTema.length <= 0) {
+    if (!listarTema) {
       return res.status(404).send({ message: "Tema não encontrado." });
     }
 
+    listarTema.postagem_id = listarPostagem;
     return res.status(200).json(listarTema);
   } catch (error) {
     return res.status(500).json({ message: error });
@@ -32,9 +36,15 @@ const visualisarTemaPorId = async (req, res) => {
 
 const adicionarTema = async (req, res) => {
   const { descricao, postagem_id } = req.body;
+  console.log(descricao, "oi");
   if (!descricao || descricao.length < 3) {
     return res.status(400).send({
       message: "A descrição é obrigatória e deve ter pelo menos 3 caracteres.",
+    });
+  }
+  if (!postagem_id) {
+    return res.status(400).send({
+      message: "a postagem_id é obrigatória ",
     });
   }
   try {

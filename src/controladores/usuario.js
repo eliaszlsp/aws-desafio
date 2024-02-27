@@ -5,7 +5,7 @@ const visualizarUsuario = async (req, res) => {
     const listarUsuario = await knex.select().from("usuario");
 
     if (listarUsuario.length <= 0) {
-      return res.status(404).send({ message: "Tema não encontrado." });
+      return res.status(404).send({ message: "usuario não encontrado." });
     }
 
     return res.status(200).json(listarUsuario);
@@ -14,20 +14,31 @@ const visualizarUsuario = async (req, res) => {
   }
 };
 const visualizarUsuarioID = async (req, res) => {
+  const { id } = req.params;
   try {
-    const listarUsuario = await knex.select().from("usuario");
-
-    if (listarUsuario.length <= 0) {
-      return res.status(404).send({ message: "Tema não encontrado." });
+    const listarUsuario = await knex
+      .select()
+      .from("usuario")
+      .where({ id })
+      .first();
+    if (!listarUsuario) {
+      return res.status(404).send({ message: "usuario não encontrado." });
     }
-
+    const listarPostagem = await knex
+      .select()
+      .from("postagem")
+      .where({ usuario_id: id });
+    console.log(listarUsuario);
+    listarUsuario.postagem_id = listarPostagem;
     return res.status(200).json(listarUsuario);
   } catch (error) {
-    return res.status(500).json({ message: error });
+    console.log(error);
+    return res.status(500).json({ message: "erro interno do servidor" });
   }
 };
 const adicionarUsuario = async (req, res) => {
   const { nome, email, foto, postagem_id } = req.body;
+
   if (!email) {
     return res.status(400).send({ message: "O email é obrigatório." });
   }
@@ -102,7 +113,7 @@ const apagarUsuario = async (req, res) => {
       return res.status(404).send({ message: "Usuário não encontrado." });
     }
 
-    await knex("usuario").where({ id }).delete();
+    const deletarUsuario = await knex("usuario").where({ id }).del();
 
     res.status(200).send({ message: "Usuário deletado com sucesso!" });
   } catch (erro) {
