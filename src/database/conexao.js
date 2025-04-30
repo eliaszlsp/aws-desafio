@@ -9,10 +9,6 @@ const db = knex({
     password: process.env.DB_PASSWORD,
     port: parseInt(process.env.DB_PORT),
   },
-
-
 });
-
-
 
 module.exports = db;
