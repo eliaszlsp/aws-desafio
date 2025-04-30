@@ -1,12 +1,27 @@
 -- Active: 1695257636860@@127.0.0.1@5432@create data base
-CREATE TABLE tema (
-    id SERIAL PRIMARY KEY, descricao TEXT NOT NULL CHECK (LENGTH(descricao) >= 3), postagem_id TEXT NOT NULL
+create table tema (
+   id          serial primary key,
+   descricao   text not null check ( length(descricao) >= 3 ),
+   postagem_id text not null
 );
 
-CREATE TABLE Postagem (
-    id SERIAL PRIMARY KEY, titulo VARCHAR(255) NOT NULL CHECK (LENGTH(titulo) >= 5), texto TEXT NOT NULL CHECK (LENGTH(texto) >= 10), data TIMESTAMP DEFAULT CURRENT_TIMESTAMP, usuario_id INTEGER REFERENCES Usuario (id) ON DELETE CASCADE, tema_id INTEGER
+create table postagem (
+   id         serial primary key,
+   titulo     varchar(255) not null check ( length(titulo) >= 5 ),
+   texto      text not null check ( length(texto) >= 10 ),
+   data       timestamp default current_timestamp,
+   usuario_id integer
+      references usuario ( id )
+         on delete cascade,
+   tema_id    integer
+      references tema ( id )
+         on delete cascade
 );
 
-CREATE TABLE usuario (
-    id SERIAL PRIMARY KEY, nome TEXT NOT NULL, email TEXT NOT NULL UNIQUE, foto TEXT, postagem_id TEXT
+create table usuario (
+   id          serial primary key,
+   nome        text not null,
+   email       text not null unique,
+   foto        text,
+   postagem_id text
 );
