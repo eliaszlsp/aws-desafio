@@ -5,6 +5,16 @@ create table tema (
    postagem_id text not null
 );
 
+
+create table usuario (
+   id          serial primary key,
+   nome        text not null,
+   email       text not null unique,
+   foto        text,
+   postagem_id text
+);
+
+
 create table postagem (
    id         serial primary key,
    titulo     varchar(255) not null check ( length(titulo) >= 5 ),
@@ -16,12 +26,4 @@ create table postagem (
    tema_id    integer
       references tema ( id )
          on delete cascade
-);
-
-create table usuario (
-   id          serial primary key,
-   nome        text not null,
-   email       text not null unique,
-   foto        text,
-   postagem_id text
 );
